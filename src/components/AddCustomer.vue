@@ -1,13 +1,13 @@
 <template>
   <div id="add">
-    <form v-on="addCustomer">
+    <form @submit="addCustomer">
         <div class="well">
             <h4>Name</h4>
             <input type="text" class="form-control" placeholder="Name" v-model="customer.name">
         </div>
         <div class="well">
             <h4>Email</h4>
-            <input type="email" class="form-control" placeholder="Email" v-model="customer.email">
+            <input type="text" class="form-control" placeholder="Email" v-model="customer.email">
         </div>
         <div class="well">
             <h4>Age</h4>
@@ -24,9 +24,27 @@
 
 <script>
 export default {
+    name: "add",
     data () {
         return {
             customer: {}
+        }
+    },
+    methods: {
+        addCustomer(e) {
+            if (!this.customer.name || !this.customer.email || !this.customer.age || !this.customer.salary) {
+                console.log("Fill all fields");
+            } else {
+                let newCustomer = {
+                    name: this.customer.name,
+                    email: this.customer.email,
+                    age: this.customer.age,
+                    salary: this.customer.salary,
+                }
+                this.$emit('newCustomer', newCustomer);
+                e.preventDefault()
+            }
+            e.preventDefault()
         }
     }
 }
